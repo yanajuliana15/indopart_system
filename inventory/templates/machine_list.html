@@ -1,0 +1,6 @@
+{% extends 'base_lte.html' %}
+{% block page_title %}Manajemen Mesin{% endblock %}
+{% block content %}
+<div class="card card-info card-outline mb-3"><div class="card-header"><h3 class="card-title">Tambah Mesin Baru</h3></div><div class="card-body"><form method="post" enctype="multipart/form-data" class="row">{% csrf_token %}<div class="col-md-4"><div class="form-group"><label>Kode</label>{{ form.code }}</div></div><div class="col-md-4"><div class="form-group"><label>Nama Mesin</label>{{ form.name }}</div></div><div class="col-md-4"><div class="form-group"><label>Foto</label>{{ form.image }}</div></div><div class="col-12"><button type="submit" class="btn btn-info">Simpan Mesin</button></div></form></div></div>
+<div class="card card-secondary card-outline"><div class="card-body"><table class="table table-hover"><thead><tr><th>Foto</th><th>Kode</th><th>Nama Mesin</th><th>Jumlah Sparepart</th><th>Aksi</th></tr></thead><tbody>
+{% for m in machines %}<tr><td>{% if m.image %}<img src="{{ m.image.url }}" width="40">{% else %}-{% endif %}</td><td>{{ m.code }}</td><td>{{ m.name }}</td><td>{{ m.sparepart_set.count }}</td><td><button class="btn btn-sm btn-danger" disabled>Delete</button></td></tr>{% endfor %}</tbody></table></div></div>{% endblock %}
