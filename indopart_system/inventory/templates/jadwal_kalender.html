@@ -1,0 +1,80 @@
+{% extends 'base_lte.html' %}
+{% block page_title %}Kalender Maintenance{% endblock %}
+{% block content %}
+
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-calendar-alt"></i> Kalender Jadwal Preventive</h3>
+        <div class="card-tools">
+            <!-- Tombol Kembali ke List -->
+            <a href="{% url 'jadwal_list' %}" class="btn btn-sm btn-default"><i class="fas fa-list"></i> Tampilan List</a>
+            <!-- Tombol Tambah -->
+            <a href="{% url 'tambah_jadwal' %}" class="btn btn-sm btn-success"><i class="fas fa-plus"></i> Tambah Jadwal</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        
+        <!-- Navigasi Bulan (Tahun & Bulan) -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="?year={{ prev_year }}&month={{ prev_month }}" class="btn btn-outline-secondary">
+                <i class="fas fa-chevron-left"></i> Bulan Lalu
+            </a>
+            
+            <h4 class="mb-0 font-weight-bold text-primary">{{ month_name }} {{ year }}</h4>
+            
+            <a href="?year={{ next_year }}&month={{ next_month }}" class="btn btn-outline-secondary">
+                Bulan Depan <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+
+        <!-- Grid Kalender -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center table-sm">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Minggu</th>
+                        <th>Senin</th>
+                        <th>Selasa</th>
+                        <th>Rabu</th>
+                        <th>Kamis</th>
+                        <th>Jumat</th>
+                        <th>Sabtu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for week in weeks %}
+                    <tr>
+                        {% for day in week %}
+                            <td style="height: 100px; vertical-align: top; width: 14%;" class="p-1">
+                                <!-- Tampilkan Angka Tanggal -->
+                                {% if day != 0 %}
+                                    <div class="font-weight-bold text-dark mb-1 text-left ml-1">
+                                        {{ day }}
+                                    </div>
+                                    
+                                    <!-- LOOPING MANUAL: Cek Jadwal per tanggal -->
+                                    <div class="mt-1 text-left ml-1">
+                                        {% for item in jadwal_list %}
+                                            {% if item.tgl_jadwal.day == day %}
+                                                <!-- Kartu Jadwal -->
+                                                <div class="mb-1">
+                                                    <a href="{% url 'jadwal_edit' item.pk %}" class="badge {% if item.status == 'Pending' %}badge-warning{% else %}badge-success{% endif %} text-white p-1 text-decoration-none w-100" style="font-size: 0.75rem; display:block;">
+                                                        {{ item.machine.name }}
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
