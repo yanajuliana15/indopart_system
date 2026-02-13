@@ -1,0 +1,88 @@
+{% extends 'base_lte.html' %}
+{% block page_title %}{% if form.instance.pk %}Edit Breakdown{% else %}Tambah Breakdown{% endif %}{% endblock %}
+{% block content %}
+
+<div class="card card-warning">
+    <div class="card-header">
+        <h3 class="card-title">
+            {% if form.instance.pk %}
+                <i class="fas fa-edit"></i> Edit Laporan Breakdown
+            {% else %}
+                <i class="fas fa-plus-circle"></i> Lapor Breakdown Baru
+            {% endif %}
+        </h3>
+        <div class="card-tools">
+            <a href="{% url 'breakdown_list' %}" class="btn btn-sm btn-secondary">Batal</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- BARIS 1: MESIN & TANGGAL -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Nama Mesin</label>
+                        {{ form.machine }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Tanggal Perbaikan</label>
+                        {{ form.tanggal }}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Waktu Pengerjaan</label>
+                        {{ form.waktu_pengerjaan }}
+                        <small class="text-muted">Contoh: 2 Jam</small>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- BARIS 2: JENIS TROUBLE & PIC -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Jenis Trouble</label>
+                        {{ form.jenis_trouble }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Nama PIC (Teknisi)</label>
+                        {{ form.pic }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- BARIS 3: PENYEBAB -->
+            <div class="form-group">
+                <label>Penyebab Kerusakan</label>
+                {{ form.penyebab }}
+            </div>
+
+            <!-- BARIS 4: TINDAKAN -->
+            <div class="form-group">
+                <label>Tindakan Perbaikan</label>
+                {{ form.tindakan }}
+            </div>
+
+            <!-- BARIS 5: SPAREPART -->
+            <div class="form-group">
+                <label>Sparepart yang Dipakai (Opsional)</label>
+                {{ form.sparepart }}
+                <small class="text-muted">Biarkan kosong jika tidak menghabiskan sparepart.</small>
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-lg float-right">Simpan Laporan</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -45,7 +45,7 @@
 
           <!-- Menu Sparepart -->
           <li class="nav-item">
-            <a href="/spareparts/" class="nav-link {% if request.resolver_match.url_name == 'sparepart_list' %}active{% endif %}">
+            <a href="/sparepart/" class="nav-link {% if request.resolver_match.url_name == 'sparepart_list' %}active{% endif %}">
               <i class="nav-icon fas fa-tools"></i>
               <p>Daftar Sparepart</p>
             </a>
@@ -63,7 +63,7 @@
             <ul class="nav nav-treeview">
               <!-- Link Utama Daftar Mesin -->
               <li class="nav-item">
-                <a href="/machines/" class="nav-link {% if request.resolver_match.url_name == 'machine_list' %}active{% endif %}">
+                <a href="/mesin/" class="nav-link {% if request.resolver_match.url_name == 'machine_list' %}active{% endif %}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Menu Mesin</p>
                 </a>
@@ -74,7 +74,7 @@
                 <li class="nav-header">DAFTAR MESIN</li>
                 {% for machine in machines %}
                   <li class="nav-item">
-                     <a href="/spareparts/?machine={{ machine.id }}" class="nav-link">
+                     <a href="/sparepart/?machine={{ machine.id }}" class="nav-link">
                       <i class="far fa-circle nav-icon text-info"></i>
                       <p>{{ machine.name }}</p>
                     </a>
@@ -86,11 +86,19 @@
             </ul>
           </li>
 
-          <!-- MENU BARU: Jadwal Preventive -->
+          <!-- MENU: Jadwal Preventive -->
           <li class="nav-item">
-              <a href="{% url 'jadwal_kalender_tahunan' %}" class="nav-link {% if request.resolver_match.url_name == 'jadwal_kalender_tahunan' %}active{% endif %}">
+              <a href="{% url 'jadwal_kalender_tahunan' %}" class="nav-link {% if request.resolver_match.url_name == 'jadwal_kalender_tahunan' or request.resolver_match.url_name == 'jadwal_list' %}active{% endif %}">
                   <i class="nav-icon fas fa-calendar-alt"></i>
                   <p>Jadwal Preventive</p>
+              </a>
+          </li>
+
+          <!-- MENU BARU: Laporan Breakdown (SAYA TAMBAHKAN DISINI) -->
+          <li class="nav-item">
+              <a href="{% url 'breakdown_list' %}" class="nav-link {% if request.resolver_match.url_name == 'breakdown_list' %}active{% endif %}">
+                  <i class="nav-icon fas fa-exclamation-triangle"></i>
+                  <p>Laporan Breakdown</p>
               </a>
           </li>
 
@@ -131,7 +139,7 @@
 
   <!-- Footer -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2023 IndoPart System.</strong> All rights reserved.
+    <strong>Copyright &copy; 2026 MTC MEIDOH.</strong> All rights reserved.
   </footer>
 </div>
 

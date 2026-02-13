@@ -18,9 +18,6 @@ class Sparepart(models.Model):
         ('Konsumabel', 'Konsumabel'),
     ]
     
-    
-    
-
     image = models.ImageField(upload_to='sparepart_images/', blank=True, null=True, verbose_name="Foto Sparepart")
     code = models.CharField(max_length=50, verbose_name="Kode Barang")
     name = models.CharField(max_length=200, verbose_name="Nama Sparepart")
@@ -28,44 +25,21 @@ class Sparepart(models.Model):
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, verbose_name="Mesin")
     stock = models.IntegerField(default=0, verbose_name="Stok Saat Ini")
     min_stock = models.IntegerField(default=1, verbose_name="Min. Stok (Peringatan)")
-    # TAMBAHKAN 2 BARIS INI
     lokasi_drawing = models.CharField(max_length=255, blank=True, default='', verbose_name="Lokasi Drawing")
     lokasi_penyimpanan = models.CharField(max_length=100, blank=True, default='', verbose_name="Lokasi Penyimpanan")
-    # ------------------------------------------------
-    image = models.ImageField(upload_to='sparepart_images/', blank=True, null=True, verbose_name="Foto Sparepart")
     created_at = models.DateTimeField(auto_now_add=True)
 
-def is_low_stock(self):
+    def is_low_stock(self):
         return self.stock <= self.min_stock
 
-def __str__(self):
+    def __str__(self):
         return self.name
 
-        from django.db import models
-
-# ... (Model Machine dan Sparepart tetap sama) ...
-
 class JadwalPreventive(models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Selesai', 'Selesai'),
     ]
-    
-    machine = models.ForeignKey(Machine, on_delete=models.CASCADE, verbose_name="Mesin")
-    tgl_jadwal = models.DateField(verbose_name="Tanggal Jadwal")
-    keterangan = models.TextField(verbose_name="Keterangan Pekerjaan")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
-    teknisi = models.CharField(max_length=100, blank=True, null=True, verbose_name="Nama Teknisi")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-def __str__(self):
-        return f"{self.machine.name} - {self.tgl_jadwal}"
-class JadwalPreventive(models.Model):
-    STATUS_CHOICES = [
-        ('Pending', 'Pending'),
-        ('Selesai', 'Selesai'),
-    ]
-    # PILIHAN BARU: Internal atau MTC
     JENIS_CHOICES = [
         ('External', 'External'),
         ('MTC', 'MTC'),
@@ -74,13 +48,34 @@ class JadwalPreventive(models.Model):
     machine = models.ForeignKey(Machine, on_delete=models.CASCADE, verbose_name="Mesin")
     tgl_jadwal = models.DateField(verbose_name="Tanggal Jadwal")
     keterangan = models.TextField(verbose_name="Keterangan Pekerjaan")
-    
-    # TAMBAHKAN 1 BARIS INI
     jenis_maintenance = models.CharField(max_length=20, choices=JENIS_CHOICES, default='Internal', verbose_name="Jenis Maintenance")
-    
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending', verbose_name="Status")
     teknisi = models.CharField(max_length=100, blank=True, null=True, verbose_name="Nama Teknisi")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.machine.name} - {self.tgl_jadwal}"
+
+# --- MODEL BARU: BREAKDOWN ---
+class Breakdown(models.Model):
+    JENIS_TROUBLE_CHOICES = [
+        ('Mekanikal', 'Mekanikal'),
+        ('Elektrikal', 'Elektrikal'),
+        ('Hidrolik', 'Hidrolik'),
+        ('Pneumatik', 'Pneumatik'),
+        ('Operasional', 'Operasional'),
+        ('Lainnya', 'Lainnya'),
+    ]
+
+    machine = models.ForeignKey(Machine, on_delete=models.CASCADE, verbose_name="Nama Mesin")
+    tanggal = models.DateField(verbose_name="Tanggal Perbaikan")
+    waktu_pengerjaan = models.CharField(max_length=100, verbose_name="Waktu Pengerjaan", help_text="Contoh: 2 Jam")
+    penyebab = models.TextField(verbose_name="Penyebab")
+    tindakan = models.TextField(verbose_name="Tindakan Perbaikan")
+    jenis_trouble = models.CharField(max_length=50, choices=JENIS_TROUBLE_CHOICES, verbose_name="Jenis Trouble")
+    sparepart = models.ForeignKey(Sparepart, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Sparepart yang Dipakai")
+    pic = models.CharField(max_length=100, verbose_name="Nama PIC (Teknisi)")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.machine.name} - {self.tanggal} ({self.jenis_trouble})"
