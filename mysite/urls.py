@@ -1,33 +1,38 @@
-from django.contrib import admin  # <--- Pastikan import ini ada
+from django.contrib import admin
 from django.urls import path
-from inventory import views
+from inventory import views  # <-- Pastikan baris ini benar
 
 urlpatterns = [
-    # PASTIKAN BARIS INI ADA (Django Admin)
-    path('admin/', admin.site.urls),
-
-    # --- DASHBOARD ---
+    # Dashboard
     path('', views.dashboard, name='dashboard'),
 
-    # --- SPAREPART ---
-    path('spareparts/', views.sparepart_list, name='sparepart_list'),
-    path('spareparts/edit/<int:pk>/', views.sparepart_edit, name='sparepart_edit'),
-    path('spareparts/delete/<int:pk>/', views.sparepart_delete, name='sparepart_delete'),
+    # Sparepart
+    path('sparepart/', views.sparepart_list, name='sparepart_list'),
+    path('sparepart/edit/<int:pk>/', views.sparepart_edit, name='sparepart_edit'),
+    path('sparepart/delete/<int:pk>/', views.sparepart_delete, name='sparepart_delete'),
+    path('export/excel/', views.export_excel, name='export_excel'),
 
-    # --- MESIN ---
-    path('machines/', views.machine_list, name='machine_list'),
+    # Machine
+    path('mesin/', views.machine_list, name='machine_list'),
 
-    # --- JADWAL PREVENTIVE ---
+    # Jadwal Preventive
     path('jadwal/', views.jadwal_list, name='jadwal_list'),
-    path('jadwal/kalender/', views.jadwal_kalender, name='jadwal_kalender'),
-    path('jadwal/kalender-tahunan/', views.jadwal_kalender_tahunan, name='jadwal_kalender_tahunan'),
     path('jadwal/tambah/', views.tambah_jadwal, name='tambah_jadwal'),
     path('jadwal/edit/<int:pk>/', views.jadwal_edit, name='jadwal_edit'),
-    path('jadwal/hapus/<int:pk>/', views.jadwal_delete, name='jadwal_delete'),
+    path('jadwal/delete/<int:pk>/', views.jadwal_delete, name='jadwal_delete'),
+    path('jadwal/kalender/', views.jadwal_kalender, name='jadwal_kalender'),
+    path('jadwal/kalender-tahunan/', views.jadwal_kalender_tahunan, name='jadwal_kalender_tahunan'),
+    path('export/excel-tahunan/', views.export_excel_tahunan, name='export_excel_tahunan'),
 
-    # --- EXPORT ---
-    path('export-excel/', views.export_excel, name='export_excel'),
+    # Breakdown (Fitur Baru)
+    path('breakdown/', views.breakdown_list, name='breakdown_list'),
+    path('breakdown/tambah/', views.tambah_breakdown, name='tambah_breakdown'),
+    path('breakdown/edit/<int:pk>/', views.breakdown_edit, name='breakdown_edit'),
+    path('breakdown/delete/<int:pk>/', views.breakdown_delete, name='breakdown_delete'),
+    path('breakdown/export/', views.export_excel_breakdown, name='export_excel_breakdown'),
 
-    # EXPORT EXEL:
-path('export-excel-tahunan/', views.export_excel_tahunan, name='export_excel_tahunan'),
+    # Admin
+    path('admin/', admin.site.urls),
 ]
+
+ 
