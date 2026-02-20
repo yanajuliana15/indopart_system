@@ -1,0 +1,96 @@
+{% extends 'base_lte.html' %}
+{% block page_title %}Kalender Maintenance Tahunan{% endblock %}
+{% block content %}
+
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Jadwal Maintenance Tahun {{ year }}</h3>
+        <div class="card-tools">
+            <div class="btn-group">
+                <a href="?year={{ prev_year }}" class="btn btn-sm btn-default"><i class="fas fa-chevron-left"></i> {{ prev_year }}</a>
+                <button type="button" class="btn btn-sm btn-default">{{ year }}</button>
+                <a href="?year={{ next_year }}" class="btn btn-sm btn-default">{{ next_year }} <i class="fas fa-chevron-right"></i></a>
+            </div>
+            <a href="{% url 'export_excel_tahunan' %}?year={{ year }}" class="btn btn-sm btn-success">
+                <i class="fas fa-file-excel"></i> Export Excel
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-default">
+                <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
+           </a>
+        </div>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center" style="font-size: 0.75rem; border: 2px solid #dee2e6;">
+                
+                <!-- HEADER: MENAMPILKAN NAMA MESIN DI ATAS -->
+                <thead style="background-color: #2c3e50;">
+                    <tr>
+                        <th style="width: 150px; vertical-align: middle; color: white; border: 1px solid #3d566e;">Bulan</th>
+                        <!-- Loop Mesin di Header -->
+                        {% for m in machines %}
+                        <th style="color: white; border: 1px solid #3d566e; padding: 5px;">{{ m.name }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                
+                <!-- BODY: MENAMPILKAN BULAN DI SAMPING -->
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <!-- KOLOM BULAN -->
+                        <td style="vertical-align: middle; background-color: #f8f9fa; border-right: 3px solid #dee2e6; padding: 10px;">
+                            <span class="font-weight-bold" style="color: #343a40;">{{ row.month }}</span>
+                        </td>
+
+                        <!-- KOLOM JADWAL PER MESIN (SESUDAH NAMA BULAN) -->
+                        {% for events in row.events %}
+                            <td style="vertical-align: top; min-height: 50px; padding: 2px; background-color: #ffffff;">
+                                <!-- LOOP EVENT DI SEL TERSEBUT -->
+                                {% for item in events %}
+                                    <!-- KARTU JADWAL MINI -->
+                                    <div class="mb-1">
+                                        <a href="{% url 'jadwal_edit' item.pk %}" 
+                                           class="d-block text-decoration-none p-1 rounded hover-effect"
+                                           style="font-size: 0.65rem; font-weight: 500;">
+                                            
+                                            {% if item.status == 'Pending' %}
+                                                <div style="background-color: #fff3cd; color: #856404; border-left: 2px solid #ffc107; border-radius: 2px;">
+                                                    <div class="d-flex justify-content-between">
+                                                        <strong>{{ item.tgl_jadwal.day }}</strong>
+                                                        {% if item.jenis_maintenance == 'External' %}<span class="badge badge-secondary" style="font-size:0.6rem">EXT</span>{% else %}<span class="badge badge-danger" style="font-size:0.6rem">MTC</span>{% endif %}
+                                                    </div>
+                                                    <small style="display:block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">{{ item.keterangan|truncatewords:2 }}</small>
+                                                </div>
+                                            {% else %}
+                                                <div style="background-color: #d4edda; color: #155724; border-left: 2px solid #28a745; border-radius: 2px;">
+                                                    <div class="d-flex justify-content-between">
+                                                        <strong>{{ item.tgl_jadwal.day }}</strong>
+                                                        {% if item.jenis_maintenance == 'External' %}<span class="badge badge-secondary" style="font-size:0.6rem">EXT</span>{% else %}<span class="badge badge-danger" style="font-size:0.6rem">MTC</span>{% endif %}
+                                                    </div>
+                                                    <small style="display:block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;">{{ item.keterangan|truncatewords:2 }}</small>
+                                                </div>
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-effect:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+
+{% endblock %}

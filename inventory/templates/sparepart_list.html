@@ -1,0 +1,155 @@
+{% extends 'base_lte.html' %}
+
+{% block page_title %}Daftar Sparepart{% endblock %}
+
+{% block content %}
+
+<!-- CARD 1: FORM INPUT (TAMPILAN RAPIH) -->
+<div class="card card-success card-outline mb-3">
+    <div class="card-header">
+        <h3 class="card-title">Tambah Sparepart Baru</h3>
+    </div>
+
+
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Baris 1: Kode & Nama -->
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label>Kode Barang</label>
+                    {{ form.code }}
+                </div>
+                <div class="col-md-9 mb-3">
+                    <label>Nama Sparepart</label>
+                    {{ form.name }}
+                </div>
+            </div>
+
+            <!-- Baris 2: Kategori & Mesin -->
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Kategori</label>
+                    {{ form.category }}
+                </div>
+                <div class="col-md-8 mb-3">
+                    <label>Pilih Mesin (Wajib)</label>
+                    {{ form.machine }}
+                </div>
+            </div>
+            
+            <!-- Baris 3: Lokasi Drawing & Penyimpanan -->
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label>Lokasi Drawing</label>
+        {{ form.lokasi_drawing }}
+    </div>
+    <div class="col-md-6 mb-3">
+        <label>Lokasi Penyimpanan</label>
+        {{ form.lokasi_penyimpanan }}
+    </div>
+</div>
+            <!-- Baris 3: Stok & Gambar -->
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label>Stok Awal</label>
+                    {{ form.stock }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label>Min. Stok</label>
+                    {{ form.min_stock }}
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label>Foto Sparepart</label>
+                    {{ form.image }}
+                    <small class="form-text text-muted">Bisa dikosongkan.</small>
+                </div>
+            </div>
+
+            <!-- Tombol Simpan -->
+            <button type="submit" class="btn btn-success btn-lg w-100">
+                <i class="fas fa-save"></i> SIMPAN DATA
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- CARD 2: TABEL DATA -->
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">Daftar Sparepart</h3>
+        
+        <!-- AREA TOOLS: PENCARIAN & EXPORT EXCEL -->
+        <div class="card-tools d-flex align-items-center gap-2">
+            <!-- Pencarian -->
+            <form method="get" class="input-group input-group-sm" style="width: 250px;">
+                <input type="text" name="q" class="form-control float-right" placeholder="Cari nama/kode..." value="{{ request.GET.q }}">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            
+            <!-- TOMBOL EXPORT EXCEL -->
+            <a href="{% url 'export_excel' %}" class="btn btn-success btn-sm">
+                <i class="fas fa-file-excel"></i> Export
+            </a>
+        </div>
+    </div>
+    
+    <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+                <tr>
+                    <th>Gambar</th>
+                    <th>Kode</th>
+                    <th>Nama Sparepart</th>
+                    <th>Kategori</th>
+                    <th>Lokasi Drawing</th>
+                    <th>Lokasi Penyimpanan</th>
+                    <th>Mesin</th>
+                    <th>Stok</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in spareparts %}
+                <tr>
+                    <td>
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="img-thumbnail-sm">
+                        {% else %}
+                            <img src="https://via.placeholder.com/50" class="img-thumbnail-sm">
+                        {% endif %}
+                    </td>
+                    <td>{{ item.code }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.lokasi_drawing|default:"-" }}</td>
+                    <td>{{ item.lokasi_penyimpanan|default:"-" }}</td>
+                    <td>{{ item.machine.name }}</td>
+                    <td>
+                        {% if item.is_low_stock %}
+                            <span class="badge badge-danger">{{ item.stock }}</span>
+                        {% else %}
+                            <span class="badge badge-success">{{ item.stock }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/sparepart/edit/{{ item.id }}/" class="btn btn-warning btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                        <a href="/sparepart/delete/{{ item.id }}/" class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus?')">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="9" class="text-center p-3">Belum ada data sparepart.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

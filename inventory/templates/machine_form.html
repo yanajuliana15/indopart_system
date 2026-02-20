@@ -1,0 +1,46 @@
+{% extends 'base_lte.html' %}
+{% load static %}
+
+{% block page_title %}Edit Mesin{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6"><h1 class="m-0">Edit Mesin</h1></div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-warning card-outline">
+                <div class="card-header"><h3 class="card-title">Form Edit</h3></div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        
+                        <!-- TAMPILKAN FOTO LAMA -->
+                        {% if machine.image %}
+                            <div class="form-group">
+                                <label>Foto Saat Ini:</label><br>
+                                <img src="{{ machine.image.url }}" class="img-thumbnail" style="max-width: 200px;">
+                            </div>
+                        {% endif %}
+
+                        <!-- INI KUNCI NYA: {{ form.as_p }} akan otomatis render semua field -->
+                        <!-- Tidak perlu tulis {{ form.code }} satu-satu -->
+                        {{ form.as_p }}
+
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a href="{% url 'machine_list' %}" class="btn btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

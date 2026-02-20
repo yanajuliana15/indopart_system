@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IndoPart System | {% block title %}Dashboard{% endblock %}</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <style>
+    .img-thumbnail-sm { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+    .sidebar-brand { font-weight: bold; font-size: 1.2rem; }
+  </style>
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a></li>
+      <li class="nav-item d-none d-sm-inline-block"><a href="/" class="nav-link">Home</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link">
+      <span class="brand-text font-weight-light pl-3">MTC MEIDOH</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          
+          <!-- Menu Dashboard -->
+          <li class="nav-item">
+            <a href="/" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+
+          <!-- Menu Sparepart -->
+          <li class="nav-item">
+            <a href="/sparepart/" class="nav-link {% if request.resolver_match.url_name == 'sparepart_list' %}active{% endif %}">
+              <i class="nav-icon fas fa-tools"></i>
+              <p>Daftar Sparepart</p>
+            </a>
+          </li>
+
+          <!-- MENU MESIN (DROPDOWN + DAFTAR DINAMIS DI DALAM) -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-industry"></i>
+              <p>
+                Manajemen Mesin
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <!-- Link Utama Daftar Mesin -->
+              <li class="nav-item">
+                <a href="/mesin/" class="nav-link {% if request.resolver_match.url_name == 'machine_list' %}active{% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Menu Mesin</p>
+                </a>
+              </li>
+
+              <!-- LOOP MESIN DIMASUKKAN KE SINI -->
+              {% if machines %}
+                <li class="nav-header">DAFTAR MESIN</li>
+                {% for machine in machines %}
+                  <li class="nav-item">
+                     <a href="/sparepart/?machine={{ machine.id }}" class="nav-link">
+                      <i class="far fa-circle nav-icon text-info"></i>
+                      <p>{{ machine.name }}</p>
+                    </a>
+                  </li>
+                {% endfor %}
+              {% endif %}
+              <!-- AKHIR LOOP MESIN -->
+
+            </ul>
+          </li>
+
+          <!-- MENU: Jadwal Preventive -->
+          <li class="nav-item">
+              <a href="{% url 'jadwal_kalender_tahunan' %}" class="nav-link {% if request.resolver_match.url_name == 'jadwal_kalender_tahunan' or request.resolver_match.url_name == 'jadwal_list' %}active{% endif %}">
+                  <i class="nav-icon fas fa-calendar-alt"></i>
+                  <p>Jadwal Preventive</p>
+              </a>
+          </li>
+
+          <!-- MENU BARU: Laporan Breakdown (SAYA TAMBAHKAN DISINI) -->
+          <li class="nav-item">
+              <a href="{% url 'breakdown_list' %}" class="nav-link {% if request.resolver_match.url_name == 'breakdown_list' %}active{% endif %}">
+                  <i class="nav-icon fas fa-exclamation-triangle"></i>
+                  <p>Laporan Breakdown</p>
+              </a>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Content Wrapper -->
+  <div class="content-wrapper">
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">{% block page_title %}{% endblock %}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Notifikasi Pesan -->
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        
+        <!-- Konten Halaman -->
+        {% block content %}{% endblock %}
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2026 MAINTENACE MEIDOH.</strong> All rights reserved.
+  </footer>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
+</html>
