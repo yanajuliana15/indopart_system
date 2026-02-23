@@ -10,7 +10,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Data Mesin</h1>
+                    <h1 class="m-0 text-dark">Data Mesin</h1>
+                </div>
+                <!-- Opsional: Tambahkan sesuatu di kanan jika perlu -->
+                <div class="col-sm-6">
+                    <!-- Breadcrumb atau tombol tambahan bisa di sini -->
                 </div>
             </div>
         </div>
@@ -26,34 +30,50 @@
                     <h3 class="card-title">Tambah Mesin Baru</h3>
                 </div>
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data" class="row">
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Kode Mesin</label>
-                                {{ form.code }}
+                        <div class="row">
+                            <!-- Kolom 1: Kode Mesin -->
+                            <div class="col-md-4">
+                                <div class="form-group d-flex align-items-center">
+                                    <!-- Label Rata Kanan -->
+                                    <label class="mb-0 mr-2 text-right" style="width: 120px;">Kode Mesin</label>
+                                    <div style="flex-grow: 1;">
+                                        <!-- Tambahkan class form-control di views.py jika ingin input full lebar -->
+                                        <div class="input-group">{{ form.code }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Kolom 2: Nama Mesin -->
+                            <div class="col-md-4">
+                                <div class="form-group d-flex align-items-center">
+                                    <label class="mb-0 mr-2 text-right" style="width: 120px;">Nama Mesin</label>
+                                    <div style="flex-grow: 1;">
+                                        <div class="input-group">{{ form.name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Kolom 3: Foto Mesin -->
+                            <div class="col-md-4">
+                                <div class="form-group d-flex align-items-center">
+                                    <label class="mb-0 mr-2 text-right" style="width: 120px;">Foto Mesin</label>
+                                    <div style="flex-grow: 1;">
+                                        <div class="input-group">{{ form.image }}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Nama Mesin</label>
-                                {{ form.name }}
+                        <!-- Tombol Simpan Rata Kanan -->
+                        <div class="row mt-3">
+                            <div class="col-12 text-right">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-save"></i> Simpan Mesin
+                                </button>
                             </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Foto Mesin</label>
-                                {{ form.image }}
-                            </div>
-                        </div>
-                        
-                        <div class="col-12 mt-2">
-                            <button type="submit" class="btn btn-info">
-                                <i class="fas fa-save"></i> Simpan Mesin
-                            </button>
                         </div>
                     </form>
                 </div>
@@ -65,13 +85,13 @@
                     <h3 class="card-title">Daftar Mesin</h3>
                 </div>
                 <div class="card-body p-0">
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped table-bordered">
                         <thead class="thead-light">
                             <tr>
-                                <th style="width: 60px;">Foto</th>
-                                <th>Kode</th>
+                                <th style="width: 60px;" class="text-center">Foto</th>
+                                <th class="text-right">Kode</th> <!-- Rata Kanan -->
                                 <th>Nama Mesin</th>
-                                <th class="text-center">Jml Sparepart</th>
+                                <th style="width: 120px;" class="text-right">Jml Sparepart</th> <!-- Rata Kanan -->
                                 <th style="width: 150px;" class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -87,16 +107,20 @@
                                     {% endif %}
                                 </td>
                                 
-                                <!-- Kolom Data -->
-                                <td class="align-middle"><strong>{{ m.code }}</strong></td>
+                                <!-- Kolom Kode (Rata Kanan) -->
+                                <td class="align-middle text-right font-weight-bold">{{ m.code }}</td>
+                                
+                                <!-- Kolom Nama -->
                                 <td class="align-middle">{{ m.name }}</td>
-                                <td class="align-middle text-center">
+                                
+                                <!-- Kolom Jumlah (Rata Kanan) -->
+                                <td class="align-middle text-right">
                                     <span class="badge badge-info">{{ m.sparepart_set.count }}</span>
                                 </td>
                                 
                                 <!-- Kolom Aksi -->
                                 <td class="align-middle text-center">
-                                    <div class="btn-group">
+                                    <div class="btn-group justify-content-center w-100">
                                         <!-- Tombol Edit -->
                                         <a href="{% url 'machine_edit' m.pk %}" class="btn btn-sm btn-warning" title="Edit">
                                             <i class="fas fa-edit"></i>

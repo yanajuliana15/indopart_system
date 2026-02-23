@@ -50,42 +50,12 @@
               <p>Daftar Sparepart</p>
             </a>
           </li>
-
-          <!-- MENU MESIN (DROPDOWN + DAFTAR DINAMIS DI DALAM) -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-industry"></i>
-              <p>
-                Manajemen Mesin
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <!-- Link Utama Daftar Mesin -->
-              <li class="nav-item">
-                <a href="/mesin/" class="nav-link {% if request.resolver_match.url_name == 'machine_list' %}active{% endif %}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Menu Mesin</p>
-                </a>
-              </li>
-
-              <!-- LOOP MESIN DIMASUKKAN KE SINI -->
-              {% if machines %}
-                <li class="nav-header">DAFTAR MESIN</li>
-                {% for machine in machines %}
-                  <li class="nav-item">
-                     <a href="/sparepart/?machine={{ machine.id }}" class="nav-link">
-                      <i class="far fa-circle nav-icon text-info"></i>
-                      <p>{{ machine.name }}</p>
-                    </a>
-                  </li>
-                {% endfor %}
-              {% endif %}
-              <!-- AKHIR LOOP MESIN -->
-
-            </ul>
+           <li class="nav-item">
+             <a href="/mesin/" class="nav-link {% if request.resolver_match.url_name == 'machine_list' %}active{% endif %}">
+                <i class="nav-icon fas fa-calendar-alt"></i>
+                  <p>Machine</p>
+              </a>
           </li>
-
           <!-- MENU: Jadwal Preventive -->
           <li class="nav-item">
               <a href="{% url 'jadwal_kalender_tahunan' %}" class="nav-link {% if request.resolver_match.url_name == 'jadwal_kalender_tahunan' or request.resolver_match.url_name == 'jadwal_list' %}active{% endif %}">

@@ -236,7 +236,7 @@ def jadwal_kalender_tahunan(request):
     prev_year = year - 1
     next_year = year + 1
     
-    machines = Machine.objects.all().order_by('code')
+    machines = Machine.objects.all().order_by('name')
     events = JadwalPreventive.objects.filter(tgl_jadwal__year=year).select_related('machine')
     
     events_by_machine = defaultdict(list)
