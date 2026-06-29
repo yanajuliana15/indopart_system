@@ -4,6 +4,7 @@
 {% block page_title %}Manajemen Mesin{% endblock %}
 
 {% block content %}
+<<<<<<< HEAD
 
 <style>
 /* BIAR FULL WIDTH */
@@ -173,4 +174,153 @@
 </div>
 </section>
 
+=======
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Data Mesin</h1>
+                </div>
+                <!-- Opsional: Tambahkan sesuatu di kanan jika perlu -->
+                <div class="col-sm-6">
+                    <!-- Breadcrumb atau tombol tambahan bisa di sini -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            
+            <!-- CARD 1: FORM TAMBAH MESIN -->
+            <div class="card card-info card-outline mb-3">
+                <div class="card-header">
+                    <h3 class="card-title">Tambah Mesin Baru</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <!-- Kolom 1: Kode Mesin -->
+                            <div class="col-md-4">
+                                <div class="form-group d-flex align-items-center">
+                                    <!-- Label Rata Kanan -->
+                                    <label class="mb-0 mr-2 text-right" style="width: 120px;">Kode Mesin</label>
+                                    <div style="flex-grow: 1;">
+                                        <!-- Tambahkan class form-control di views.py jika ingin input full lebar -->
+                                        <div class="input-group">{{ form.code }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Kolom 2: Nama Mesin -->
+                            <div class="col-md-4">
+                                <div class="form-group d-flex align-items-center">
+                                    <label class="mb-0 mr-2 text-right" style="width: 120px;">Nama Mesin</label>
+                                    <div style="flex-grow: 1;">
+                                        <div class="input-group">{{ form.name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Kolom 3: Foto Mesin -->
+                            <div class="col-md-4">
+                                <div class="form-group d-flex align-items-center">
+                                    <label class="mb-0 mr-2 text-right" style="width: 120px;">Foto Mesin</label>
+                                    <div style="flex-grow: 1;">
+                                        <div class="input-group">{{ form.image }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tombol Simpan Rata Kanan -->
+                        <div class="row mt-3">
+                            <div class="col-12 text-right">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-save"></i> Simpan Mesin
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- CARD 2: TABEL LIST MESIN -->
+            <div class="card card-secondary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Daftar Mesin</h3>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style="width: 60px;" class="text-center">Foto</th>
+                                <th class="text-right">Kode</th> <!-- Rata Kanan -->
+                                <th>Nama Mesin</th>
+                                <th style="width: 120px;" class="text-right">Jml Sparepart</th> <!-- Rata Kanan -->
+                                <th style="width: 150px;" class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in machines %}
+                            <tr>
+                                <!-- Kolom Foto -->
+                                <td class="text-center align-middle">
+                                    {% if m.image %}
+                                        <img src="{{ m.image.url }}" class="img-circle elevation-2" alt="Foto" style="width: 40px; height: 40px; object-fit: cover;">
+                                    {% else %}
+                                        <span class="badge badge-secondary">No Img</span>
+                                    {% endif %}
+                                </td>
+                                
+                                <!-- Kolom Kode (Rata Kanan) -->
+                                <td class="align-middle text-right font-weight-bold">{{ m.code }}</td>
+                                
+                                <!-- Kolom Nama -->
+                                <td class="align-middle">{{ m.name }}</td>
+                                
+                                <!-- Kolom Jumlah (Rata Kanan) -->
+                                <td class="align-middle text-right">
+                                    <span class="badge badge-info">{{ m.sparepart_set.count }}</span>
+                                </td>
+                                
+                                <!-- Kolom Aksi -->
+                                <td class="align-middle text-center">
+                                    <div class="btn-group justify-content-center w-100">
+                                        <!-- Tombol Edit -->
+                                        <a href="{% url 'machine_edit' m.pk %}" class="btn btn-sm btn-warning" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        
+                                        <!-- Tombol Delete -->
+                                        <form action="{% url 'machine_delete' m.pk %}" method="post" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Hapus" onclick="return confirm('Yakin ingin menghapus mesin {{ m.name }}?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">
+                                    Belum ada data mesin. Silakan tambah data baru.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+>>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2
 {% endblock %}

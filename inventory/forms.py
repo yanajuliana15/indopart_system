@@ -1,7 +1,11 @@
 from django import forms
+<<<<<<< HEAD
 from .models import Machine, Sparepart, JadwalPreventive, Breakdown,MemberMTC,Kaizen
 
    
+=======
+from .models import Machine, Sparepart, JadwalPreventive, Breakdown
+>>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2
 
 class MachineForm(forms.ModelForm):
     class Meta:
@@ -86,6 +90,7 @@ class BreakdownForm(forms.ModelForm):
             'foto': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
             
             'pic': forms.TextInput(attrs={'class': 'form-control'}),
+<<<<<<< HEAD
         }
 
 class MemberMTCForm(forms.ModelForm):
@@ -170,4 +175,6 @@ class KaizenForm(forms.ModelForm):
                     'rows': 4
                 }
             ),
+=======
+>>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2
         }

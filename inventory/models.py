@@ -1,5 +1,8 @@
 from django.db import models
+<<<<<<< HEAD
 
+=======
+>>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2
 # --- HAPUS BARIS INI ---
 # from django.shortcuts import render, redirect, get_object_or_404
 
@@ -89,6 +92,7 @@ class Breakdown(models.Model):
 
     def __str__(self):
         # Perbaikan spasi agar tidak nempel: ") -" menjadi ") - "
+<<<<<<< HEAD
         return f"{self.machine.name} - {self.tanggal} ({self.jenis_trouble}) - {self.kerusakan}"
 
 
@@ -174,3 +178,6 @@ class Kaizen(models.Model):
 
     def __str__(self):
         return self.tema
+=======
+        return f"{self.machine.name} - {self.tanggal} ({self.jenis_trouble}) - {self.kerusakan}"
+>>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2

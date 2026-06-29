@@ -34,6 +34,7 @@ urlpatterns = [
     path('breakdown/edit/<int:pk>/', views.breakdown_edit, name='breakdown_edit'),
     path('breakdown/delete/<int:pk>/', views.breakdown_delete, name='breakdown_delete'),
     path('breakdown/export/', views.export_excel_breakdown, name='export_excel_breakdown'),
+<<<<<<< HEAD
     path('member/', views.member_mtc, name='member_mtc'),
     path('member/tambah/', views.tambah_member, name='tambah_member'),
     path('member/edit/<int:pk>/', views.edit_member, name='edit_member'),
@@ -45,6 +46,9 @@ urlpatterns = [
     path('kaizen/edit/<int:pk>/', views.kaizen_edit, name='kaizen_edit'),
     path('kaizen/delete/<int:pk>/', views.kaizen_delete, name='kaizen_delete'),
     path('kaizen/detail/<int:pk>/', views.kaizen_detail, name='kaizen_detail'),
+=======
+
+>>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2
     path('admin/', admin.site.urls),
 ]
 
