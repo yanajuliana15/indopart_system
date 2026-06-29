@@ -1,0 +1,80 @@
+{% extends 'base_lte.html' %}
+{% block page_title %}Dashboard Overview{% endblock %}
+{% block content %}
+
+<!-- 1. SMALL BOXES (STATISTIK) -->
+<div class="row mb-3">
+  
+  <!-- BOX 1: SPAREPART -->
+  <div class="col-lg-3 col-md-6">
+    <div class="small-box bg-info">
+      <div class="inner">
+        <h3>{{ total_spareparts }}</h3>
+        <p>Total Sparepart</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-tools"></i>
+      </div>
+      <a href="/sparepart/" class="small-box-footer">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+
+  <!-- BOX 2: MAINTENANCE (MESIN) -->
+  <div class="col-lg-3 col-md-6">
+    <div class="small-box bg-dark">
+      <div class="inner">
+        <h3>{{ total_machines }}</h3>
+        <p>Total Unit Mesin</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-industry"></i>
+      </div>
+      <a href="/mesin/" class="small-box-footer">Lihat Daftar Mesin <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+
+  <!-- BOX 3: JADWAL PREVENTIVE -->
+  <div class="col-lg-3 col-md-6">
+    <div class="small-box bg-success">
+      <div class="inner">
+        <h3>{{ jadwal_preventive.count }}</h3>
+        <p>Jadwal Preventive Aktif</p>
+      </div>
+      <div class="icon">
+        <i class="fas fa-calendar-check"></i>
+      </div>
+      <a href="{% url 'jadwal_list' %}" class="small-box-footer">Lihat Jadwal <i class="fas fa-arrow-circle-right"></i></a>
+    </div>
+  </div>
+
+  <!-- BOX 4: BREAKDOWN (TAMPILAN DISAMAKAN DENGAN SPAREPART) -->
+  <div class="col-lg-3 col-md-6">
+    <div class="small-box bg-warning">
+      <div class="inner">
+        <h3>{{ total_breakdowns }}</h3> <!-- Menggunakan variable total_breakdowns -->
+        <p>Total Breakdown</p>       <!-- Teks disamakan -->
+      </div>
+      <div class="icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <a href="{% url 'breakdown_list' %}" class="small-box-footer text-dark">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a> <!-- Teks tombol disamakan -->
+    </div>
+  </div>
+
+</div>
+
+  
+
+</div>
+
+
+
+<style>
+    .hover-effect:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base_lte.html' %}
+
+{% block content %}
+
+<section class="content-header">
+    <div class="container-fluid">
+
+        <div class="row mb-2">
+
+            <div class="col-sm-6">
+                <h3>Member Maintenance</h3>
+            </div>
+
+            <div class="col-sm-6 text-right">
+                <a href="{% url 'tambah_member' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Tambah Member
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="content">
+<div class="container-fluid">
+
+<div class="card">
+
+<div class="card-body p-0">
+
+<div style="width:100%; overflow-x:auto;">
+
+<table class="table table-bordered table-striped"
+       style="width:100%; min-width:800px;">
+
+    <thead style="background:#343a40; color:white;">
+        <tr>
+            <th>No</th>
+            <th>NIK</th>
+            <th>Nama</th>
+            <th>Foto</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for m in members %}
+
+        <tr>
+
+            <td>{{ forloop.counter }}</td>
+            <td>{{ m.nik }}</td>
+            <td>{{ m.nama }}</td>
+
+            <td>
+                {% if m.foto %}
+                    <img src="{{ m.foto.url }}"
+                         width="50"
+                         height="50"
+                         style="object-fit:cover; border-radius:5px;">
+                {% else %}
+                    <span class="text-muted">No Foto</span>
+                {% endif %}
+            </td>
+
+            <td>
+
+                <a href="{% url 'edit_member' m.id %}"
+                   class="btn btn-warning btn-sm">
+                    Edit
+                </a>
+
+                <a href="{% url 'delete_member' m.id %}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Hapus data ini?')">
+                    Hapus
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+            <td colspan="5" class="text-center">
+                Belum ada data member
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base_lte.html' %}
+{% block page_title %}Kalender Maintenance Tahunan{% endblock %}
+{% block content %}
+
+<style>
+/* BIKIN FULL WIDTH SCROLL HORIZONTAL */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* BIAR TABEL TIDAK KECIL */
+.full-table {
+    width: 100%;
+    min-width: 1400px;   /* INI YANG BIKIN FULL KE SAMPING */
+}
+</style>
+
+<div class="card-body p-0">
+
+<div class="table-wrap">
+
+    <table class="table table-bordered table-hover text-center full-table"
+           style="font-size: 0.75rem; border: 2px solid #dee2e6;">
+
+        <!-- HEADER -->
+        <thead style="background-color: #2c3e50;">
+            <tr>
+                <th style="width:150px; color:white;">Bulan</th>
+
+                {% for m in machines %}
+                <th style="color:white; padding:5px;">
+                    {{ m.name }}
+                </th>
+                {% endfor %}
+            </tr>
+        </thead>
+
+        <!-- BODY -->
+        <tbody>
+
+            {% for row in rows %}
+            <tr>
+
+                <!-- BULAN -->
+                <td style="background:#f8f9fa; font-weight:bold;">
+                    {{ row.month }}
+                </td>
+
+                <!-- EVENT PER MESIN -->
+                {% for events in row.events %}
+
+                <td style="vertical-align:top; padding:3px;">
+
+                    {% for item in events %}
+
+                        <a href="{% url 'jadwal_edit' item.id %}"
+                           style="text-decoration:none;">
+
+                            <div style="
+                                margin-bottom:4px;
+                                padding:5px;
+                                font-size:11px;
+                                border-radius:4px;
+                                border-left:4px solid
+                                {% if item.status == 'Pending' %}#ffc107{% else %}#28a745{% endif %};
+                                background:
+                                {% if item.status == 'Pending' %}#fff3cd{% else %}#d4edda{% endif %};
+                            ">
+
+                                <div style="display:flex; justify-content:space-between;">
+                                    <b>{{ item.tgl_jadwal.day }}</b>
+
+                                    {% if item.jenis_maintenance == 'External' %}
+                                        <span class="badge badge-secondary">EXT</span>
+                                    {% else %}
+                                        <span class="badge badge-danger">MTC</span>
+                                    {% endif %}
+                                </div>
+
+                                <div style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                                    {{ item.keterangan }}
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    {% empty %}
+                        <div style="color:#ccc;">-</div>
+                    {% endfor %}
+
+                </td>
+
+                {% endfor %}
+
+            </tr>
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</div>
+
+{% endblock %}

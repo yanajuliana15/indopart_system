@@ -1,0 +1,81 @@
+{% extends 'base_lte.html' %}
+
+{% block content %}
+
+<div class="content-wrapper">
+
+<section class="content-header">
+
+<div class="container-fluid">
+
+<h1>{{ judul }}</h1>
+
+</div>
+
+</section>
+
+<section class="content">
+
+<div class="card card-primary">
+
+<form method="POST"
+      enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="card-body">
+
+<div class="form-group">
+
+<label>NIK</label>
+
+{{ form.nik }}
+
+</div>
+
+<div class="form-group">
+
+<label>Nama</label>
+
+{{ form.nama }}
+
+</div>
+
+<div class="form-group">
+
+<label>Foto</label>
+
+{{ form.foto }}
+
+</div>
+
+</div>
+
+<div class="card-footer">
+
+<button class="btn btn-success">
+
+<i class="fas fa-save"></i>
+
+Simpan
+
+</button>
+
+<a href="{% url 'member_mtc' %}"
+class="btn btn-secondary">
+
+Kembali
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,223 @@
+{% extends 'base_lte.html' %}
+
+{% block content %}
+
+<div class="content-wrapper">
+
+<section class="content-header">
+    <div class="container-fluid">
+
+        <div class="row mb-2">
+
+            <div class="col-sm-6">
+                <h3>Hapus Schedule Kaizen</h3>
+            </div>
+
+            <div class="col-sm-6 text-right">
+                <a href="{% url 'kaizen_list' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="content">
+
+<div class="card card-danger">
+
+<div class="card-header">
+    <h3 class="card-title">
+        <i class="fas fa-trash"></i>
+        Konfirmasi Hapus Data
+    </h3>
+</div>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="card-body">
+
+<div class="alert alert-danger">
+
+<h5>
+<i class="icon fas fa-exclamation-triangle"></i>
+
+Apakah Anda yakin ingin menghapus data Schedule Kaizen ini?
+
+</h5>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="form-group">
+<label>Tanggal</label>
+<input type="text" class="form-control"
+value="{{ data.tanggal }}" readonly>
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="form-group">
+<label>Mesin</label>
+<input type="text" class="form-control"
+value="{{ data.mesin }}" readonly>
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="form-group">
+<label>Tema Kaizen</label>
+<input type="text" class="form-control"
+value="{{ data.tema }}" readonly>
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="form-group">
+<label>Kategori</label>
+<input type="text" class="form-control"
+value="{{ data.kategori }}" readonly>
+</div>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<div class="form-group">
+<label>PIC</label>
+<input type="text" class="form-control"
+value="{{ data.pic }}" readonly>
+</div>
+
+</div>
+
+<div class="col-md-6">
+
+<div class="form-group">
+<label>Status</label>
+<input type="text" class="form-control"
+value="{{ data.status }}" readonly>
+</div>
+
+</div>
+
+</div>
+
+<div class="form-group">
+
+<label>Kondisi Saat Ini</label>
+
+<textarea class="form-control"
+rows="3"
+readonly>{{ data.kondisi }}</textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>Rencana Kaizen</label>
+
+<textarea class="form-control"
+rows="3"
+readonly>{{ data.rencana }}</textarea>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6">
+
+<label>Foto Before</label>
+
+{% if data.foto_before %}
+
+<img src="{{ data.foto_before.url }}"
+class="img-fluid img-thumbnail">
+
+{% else %}
+
+<div class="border p-5 text-center">
+
+Tidak Ada Foto
+
+</div>
+
+{% endif %}
+
+</div>
+
+<div class="col-md-6">
+
+<label>Foto After</label>
+
+{% if data.foto_after %}
+
+<img src="{{ data.foto_after.url }}"
+class="img-fluid img-thumbnail">
+
+{% else %}
+
+<div class="border p-5 text-center">
+
+Tidak Ada Foto
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card-footer text-right">
+
+<button type="submit"
+class="btn btn-danger">
+
+<i class="fas fa-trash"></i>
+
+Ya, Hapus
+
+</button>
+
+<a href="{% url 'kaizen_list' %}"
+class="btn btn-secondary">
+
+Batal
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'base_lte.html' %}
+{% load static %}
+
+{% block page_title %}Manajemen Mesin{% endblock %}
+
+{% block content %}
+
+<style>
+/* BIAR FULL WIDTH */
+.full-width {
+    width: 100%;
+}
+
+/* WRAPPER SCROLL JIKA LAYAR KECIL */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* BIAR TABEL TIDAK KECIL */
+.table-wide {
+    width: 100%;
+    min-width: 1000px;
+}
+</style>
+
+<section class="content">
+<div class="container-fluid full-width">
+
+<!-- CARD FORM -->
+<div class="card card-info card-outline mb-3">
+
+    <div class="card-header">
+        <h3 class="card-title">Tambah Mesin Baru</h3>
+    </div>
+
+    <div class="card-body">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="row">
+
+                <!-- KODE -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Kode Mesin</label>
+                        {{ form.code }}
+                    </div>
+                </div>
+
+                <!-- NAMA -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Nama Mesin</label>
+                        {{ form.name }}
+                    </div>
+                </div>
+
+                <!-- FOTO -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Foto Mesin</label>
+                        {{ form.image }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-info">
+                    <i class="fas fa-save"></i> Simpan Mesin
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<!-- CARD TABLE -->
+<div class="card card-secondary card-outline">
+
+    <div class="card-header">
+        <h3 class="card-title">Daftar Mesin</h3>
+    </div>
+
+    <div class="card-body p-0">
+
+        <div class="table-wrap">
+
+        <table class="table table-hover table-striped table-bordered table-wide">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th style="width:60px;" class="text-center">Foto</th>
+                    <th class="text-right">Kode</th>
+                    <th>Nama Mesin</th>
+                    <th class="text-right">Jml Sparepart</th>
+                    <th style="width:150px;" class="text-center">Aksi</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for m in machines %}
+
+                <tr>
+
+                    <td class="text-center align-middle">
+                        {% if m.image %}
+                            <img src="{{ m.image.url }}"
+                                 style="width:40px;height:40px;object-fit:cover;border-radius:50%;">
+                        {% else %}
+                            <span class="badge badge-secondary">No Img</span>
+                        {% endif %}
+                    </td>
+
+                    <td class="text-right font-weight-bold align-middle">
+                        {{ m.code }}
+                    </td>
+
+                    <td class="align-middle">
+                        {{ m.name }}
+                    </td>
+
+                    <td class="text-right align-middle">
+                        <span class="badge badge-info">
+                            {{ m.sparepart_set.count }}
+                        </span>
+                    </td>
+
+                    <td class="text-center align-middle">
+
+                        <a href="{% url 'machine_edit' m.pk %}"
+                           class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit"></i>
+                        </a>
+
+                        <form action="{% url 'machine_delete' m.pk %}"
+                              method="post"
+                              style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Hapus {{ m.name }} ?')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">
+                        Belum ada data mesin
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+</section>
+
+{% endblock %}

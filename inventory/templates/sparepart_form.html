@@ -1,0 +1,4 @@
+{% extends 'base_lte.html' %}
+{% block page_title %}Edit Sparepart{% endblock %}
+{% block content %}
+<div class="card card-warning card-outline"><div class="card-body"><h3>Edit Data</h3><form method="post" enctype="multipart/form-data">{% csrf_token %}{{ form.as_p }}<button type="submit" class="btn btn-warning">Update</button><a href="/spareparts/" class="btn btn-secondary">Batal</a></form></div></div>{% endblock %}

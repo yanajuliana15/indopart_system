@@ -1,0 +1,58 @@
+{% extends 'base_lte.html' %}
+
+{% block content %}
+
+<div class="content-wrapper">
+
+<section class="content">
+
+<div class="card card-danger">
+
+<div class="card-header">
+
+<h3>Hapus Member</h3>
+
+</div>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="card-body">
+
+<h4>
+
+Apakah Anda yakin ingin menghapus
+
+<strong>{{ member.nama }}</strong>?
+
+</h4>
+
+</div>
+
+<div class="card-footer">
+
+<button class="btn btn-danger">
+
+Ya, Hapus
+
+</button>
+
+<a href="{% url 'member_mtc' %}"
+class="btn btn-secondary">
+
+Batal
+
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+</div>
+
+{% endblock %}

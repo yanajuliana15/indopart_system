@@ -1,0 +1,62 @@
+{% extends 'base_lte.html' %}
+
+{% block content %}
+
+<div class="content-wrapper">
+
+<section class="content">
+<div class="container-fluid">
+
+<h3>Detail Kaizen</h3>
+
+<div class="card">
+
+<div class="card-body">
+
+<p><b>Tanggal:</b> {{ data.tanggal }}</p>
+<p><b>Mesin:</b> {{ data.mesin }}</p>
+<p><b>Jenis Kaizen:</b> {{ data.jenis_kaizen }}</p>
+<p><b>Tema:</b> {{ data.tema }}</p>
+<p><b>Kategori:</b> {{ data.kategori }}</p>
+<p><b>PIC:</b> {{ data.pic }}</p>
+<p><b>Status:</b> {{ data.status }}</p>
+<p><b>Target:</b> {{ data.target_selesai }}</p>
+
+<hr>
+
+<p><b>Kondisi Saat Ini:</b></p>
+<p>{{ data.kondisi }}</p>
+
+<p><b>Rencana Kaizen:</b></p>
+<p>{{ data.rencana }}</p>
+
+<hr>
+
+<div class="row">
+
+<div class="col-md-6">
+    <p><b>Foto Before</b></p>
+    {% if data.foto_before %}
+        <img src="{{ data.foto_before.url }}" class="img-fluid">
+    {% endif %}
+</div>
+
+<div class="col-md-6">
+    <p><b>Foto After</b></p>
+    {% if data.foto_after %}
+        <img src="{{ data.foto_after.url }}" class="img-fluid">
+    {% endif %}
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+</div>
+
+{% endblock %}

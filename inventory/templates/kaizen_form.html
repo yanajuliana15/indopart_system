@@ -1,0 +1,141 @@
+{% extends 'base_lte.html' %}
+
+{% block content %}
+
+<div class="content-wrapper">
+
+<section class="content-header">
+    <div class="container-fluid">
+        <h3>{{ judul }}</h3>
+    </div>
+</section>
+
+<section class="content">
+
+<div class="card card-primary">
+
+<div class="card-header">
+    <h3 class="card-title">Form Schedule Kaizen</h3>
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="card-body">
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Tanggal</label>
+            {{ form.tanggal }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Mesin</label>
+            {{ form.mesin }}
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Tema Kaizen</label>
+            {{ form.tema }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Kategori</label>
+            {{ form.kategori }}
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>PIC</label>
+            {{ form.pic }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Target Selesai</label>
+            {{ form.target_selesai }}
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Status</label>
+            {{ form.status }}
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Kondisi Saat Ini</label>
+    {{ form.kondisi }}
+</div>
+
+<div class="form-group">
+    <label>Rencana Kaizen</label>
+    {{ form.rencana }}
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Foto Before</label>
+            {{ form.foto_before }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Foto After</label>
+            {{ form.foto_after }}
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+<div class="card-footer">
+
+<button class="btn btn-success">
+<i class="fas fa-save"></i> Simpan
+</button>
+
+<a href="{% url 'kaizen_list' %}" class="btn btn-secondary">
+<i class="fas fa-arrow-left"></i> Kembali
+</a>
+
+</div>
+
+</form>
+
+</div>
+
+</section>
+
+</div>
+
+{% endblock %}

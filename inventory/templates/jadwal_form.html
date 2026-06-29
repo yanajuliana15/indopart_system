@@ -1,0 +1,63 @@
+{% extends 'base_lte.html' %}
+
+{% block title %}Edit / Tambah Jadwal{% endblock %}
+{% block page_title %}Form Input Jadwal Preventive{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Input Data Jadwal</h3>
+            </div>
+            
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="card-body">
+                    <!-- Mesin -->
+                    <div class="form-group">
+                        <label>Mesin</label>
+                        {{ form.machine }}
+                    </div>
+
+                    <!-- Tanggal -->
+                    <div class="form-group">
+                        <label>Tanggal Jadwal</label>
+                        {{ form.tgl_jadwal }}
+                    </div>
+
+                    <!-- BARU: JENIS MAINTENANCE (INTERNAL / MTC) -->
+                    <div class="form-group">
+                        <label>Jenis Maintenance</label>
+                        {{ form.jenis_maintenance }}
+                    </div>
+
+                    <!-- Keterangan -->
+                    <div class="form-group">
+                        <label>Keterangan Pekerjaan</label>
+                        {{ form.keterangan }}
+                    </div>
+
+                    <!-- Status -->
+                    <div class="form-group">
+                        <label>Status</label>
+                        {{ form.status }}
+                    </div>
+
+                    <!-- Teknisi -->
+                    <div class="form-group">
+                        <label>Nama Teknisi</label>
+                        {{ form.teknisi }}
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Simpan Jadwal</button>
+                    <a href="{% url 'jadwal_list' %}" class="btn btn-secondary">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
