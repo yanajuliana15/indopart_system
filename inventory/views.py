@@ -9,15 +9,12 @@ from datetime import datetime
 import calendar
 from collections import defaultdict
 from django.db.models import Q
-<<<<<<< HEAD
 from .models import MemberMTC
 from .forms import MemberMTCForm
 from .models import Kaizen
 from .forms import KaizenForm
 from .models import Kaizen
 
-=======
->>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2
 
 # --- DASHBOARD ---
 def dashboard(request):
@@ -410,7 +407,6 @@ def export_excel_breakdown(request):
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=Laporan_Breakdown.xlsx'
     wb.save(response)
-<<<<<<< HEAD
     return response
 
 
@@ -550,6 +546,5 @@ def kaizen_detail(request, pk):
     return render(request, 'kaizen_detail.html', {
         'data': kaizen
     })
-=======
     return response
->>>>>>> 58b2a2232268fbb15f82abb47c8ff33875c22cc2
+
